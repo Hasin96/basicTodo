@@ -15,7 +15,7 @@ steps:
       versionSpec: "14.x"
     displayName: "Install Node.js"
 
-  - script: |
+  - task: 
       cd my-app
       npm install
       npm test

@@ -4,16 +4,30 @@
 # https://aka.ms/yaml
 
 trigger:
-- main
+  - main
 
 pool:
-  vmImage: ubuntu-latest
+  vmImage: "ubuntu-latest"
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+  - task: NodeTool@0
+    inputs:
+      versionSpec: "14.x"
+    displayName: "Install Node.js"
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+  - script: |
+      cd my-app
+      npm install
+      npm test
+    displayName: "Install dependencies and run tests"
+
+  - task: CopyFiles@2
+    inputs:
+    sourceFolder: 'my-app/build'
+    targetFolder: '$(Build.ArtifactStagingDirectory)/build'
+    displayName: 'Copy build artifacts'
+
+- task: PublishBuildArtifacts@1
+    inputs:
+    artifactName: 'build'
+    displayName: 'Publish build artifacts'

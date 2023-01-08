@@ -15,19 +15,13 @@ steps:
       versionSpec: "14.x"
     displayName: "Install Node.js"
 
-  - task: 
-      cd my-app
+  - task: cd my-app
       npm install
       npm test
     displayName: "Install dependencies and run tests"
 
   - task: CopyFiles@2
     inputs:
-    sourceFolder: 'my-app/build'
-    targetFolder: '$(Build.ArtifactStagingDirectory)/build'
-    displayName: 'Copy build artifacts'
-
-- task: PublishBuildArtifacts@1
-    inputs:
-    artifactName: 'build'
-    displayName: 'Publish build artifacts'
+    sourceFolder: "my-app/build"
+    targetFolder: "$(Build.ArtifactStagingDirectory)/build"
+    displayName: "Copy build artifacts"
